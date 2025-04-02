@@ -104,7 +104,7 @@ module.exports.userRegister = async (req, res) => {
   try {
     const checkUser = await User.find({ email: req.body.email });
     if (checkUser.length > 0) {
-      return res.status(500).json({ message: "Error registering user", error });
+      return res.status(500).json({ message: "Error registering user" });
     }
     const { name, email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
