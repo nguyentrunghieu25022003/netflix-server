@@ -108,14 +108,16 @@ module.exports.userRegister = async (req, res) => {
     }
     const { name, email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = await new User({
+    const newUser = new User({
       avatar: req.file.path,
       name: name,
       email: email,
       password: hashedPassword,
     });
     await newUser.save();
-    const users = await User({});
+    const users = await User.findOne({
+      email: email
+    });
     res.json(users);
   } catch (err) {
     res.status(500).send("Message: " + err.message);
